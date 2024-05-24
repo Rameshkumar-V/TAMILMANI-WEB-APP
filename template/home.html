@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section class="content-section">
+        <div class="content-container">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='img/tamimani.png') }}" alt="Image" >
+            </div>
+            <div class="text-container">
+                <h2>{{page_info.name}}</h2>
+                <p>{{page_info.job}}</p>
+                <p>{{page_info.slogan}}</p>
+                <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus, lorem sit amet consequat tincidunt, neque massa tincidunt nulla, vel convallis justo lacus sit amet magna.</p> -->
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+
+

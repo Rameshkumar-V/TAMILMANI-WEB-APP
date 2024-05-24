@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/resources.css') }}">
+</head>
+<body>
+
+<div class="content-section resources-section">
+    <h1>Resources</h1>
+    <div class="content-container">
+        <div class="resources-container">
+            {% if categories %}
+                {% for category in categories %}
+                    <div class="resource-box">
+                        <h3>{{ category.category }}</h3>
+                        <a href="{{ url_for('download_page', category_id=category.c_id) }}">See Page</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No resources currently available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

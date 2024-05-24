@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="content">
+        {% block content %}{% endblock %}
+        {% include 'about_me.html' %}
+        {% include 'resources.html' %}
+        {% include 'contact.html' %}
+        {% include 'contact_us.html' %}
+    </div>
+        
+    {% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

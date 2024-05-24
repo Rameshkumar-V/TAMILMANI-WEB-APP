@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-HCE4qbwPe2I/1KEfDbx2iET7ZgOVYVbpehC2lTbFYKjCZ6+6VN+JrkoalS+OvcVgMIxygB6jWVs8gWecKjqvIw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+<div id="contact-section" class="contact-section">
+    <div class="content-container">
+        <h2>Contact</h2>
+        
+        <table>
+
+            {% for contact in contact%}
+            <tr>
+                <td>{{contact.app_name}}</td>
+                <td><button><a href="{{contact.link}}" target="_blank">Visit</a></button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
