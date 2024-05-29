@@ -24,6 +24,22 @@
     flex: 1;
     padding: 0 20px;
 }
+.about-text-container {
+    max-height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    scrollbar-width: 1px;
+    /* Add the following rules */
+    -webkit-overflow-scrolling: touch;
+    -webkit-scrollbar {
+      width: 1px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    -webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+    }
+  }
 
 .about-image-container img {
     max-width: 100%;

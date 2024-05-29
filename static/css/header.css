@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #007bff;
     color: white;
     padding: 10px 0;
 }
@@ -82,7 +82,7 @@ nav {
 
 /* Footer styles */
 footer {
-    background-color: #333;
+    background-color: #007bff;
     color: white;
     text-align: center;
     padding: 10px 0;

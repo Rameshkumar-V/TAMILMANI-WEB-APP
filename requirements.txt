@@ -3,3 +3,4 @@ Flask-SQLAlchemy==3.1.1
 flask-admin==1.6.1
 Flask-Uploads==0.2.1
 flask-paginate
+flask-login-0.6.3

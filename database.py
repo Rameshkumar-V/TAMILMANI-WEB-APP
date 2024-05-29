@@ -1,18 +1,26 @@
 from flask import request, Flask
+import os
+# ADMIN HANDLER
+from flask_admin import Admin
 from flask_admin.form.upload import FileUploadField
 from flask_admin.contrib.sqla import ModelView
+
+# ADMIN INSIDE FORM EDITORS
+from wtforms.fields import SelectField
 from flask_admin.form import Select2Widget
+
+# DATABASE HANDLER
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_admin import Admin
-from wtforms.fields import SelectField
-import os
+
 
 app = Flask(__name__)
 
-# Configuration
-app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tmproject.db'
+# CONFIGURATIONS
+app.config['SECRET_KEY'] = 'your_secret_key' # secret key
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tmproject.db' # db path
+
+app.config['SQLALCHEMY_DATABASE_URI'] ="mysql://rk:rk@localhost/blog"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'uploads'  # Temporary upload folder
 
@@ -20,7 +28,6 @@ db = SQLAlchemy(app)
 
 # NOTE : This line help me for temporarily filefieldupload pdf stored and upl to db.
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
 
 # CONTACT MODEL
 class Contact(db.Model):
@@ -45,7 +52,6 @@ class Document(db.Model):
     document = db.Column(db.LargeBinary, nullable=False)  # Storing document content directly
     category_id = db.Column(db.Integer, db.ForeignKey('category.c_id'), nullable=False)
     upl_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    
     category = db.relationship('Category', backref=db.backref('documents', lazy=True))
 
     def __repr__(self):
@@ -64,7 +70,6 @@ class Document(db.Model):
             print(f"Error deleting file '{self.document_filename}': {str(e)}")
 
 
-# PAGE INFORMATION
 # PAGE INFORMATION MODEL
 class PageInformation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -88,11 +93,22 @@ class ContactInfo(db.Model):
 
     def __repr__(self):
         return f"ContactInfo('{self.app_name}', '{self.link}')"
+    
+
+# PROFILE ABOUT MODEL
+class ProfileAbout(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    detail = db.Column(db.Text, nullable=False)
 
 
+'''
+ CUSTOMLY I AM SHOWING 
+ ----------------------
+'''
 
 
-# CUSTOMLY I AM SHOWING :
+# for DOCUMENT
 class DocumentView(ModelView):
     form_overrides = {
         'document': FileUploadField
@@ -103,7 +119,7 @@ class DocumentView(ModelView):
         }
     }
     column_exclude_list = ['document']
-    form_excluded_columns = ['upl_date','document_filename']  # Exclude upload date
+    form_excluded_columns = ['upl_date','document_filename']  # Excluded items
 
     def scaffold_form(self):
         # THIS FUNCTION SHOWING CATEGORY
@@ -118,7 +134,7 @@ class DocumentView(ModelView):
         return form
 
     def create_form(self, obj=None):
-        # CATEGORIES VALUES CHOICES FOR INPU OR CREATE AREA
+        # CATEGORIES VALUES CHOICES FOR INPUt OR CREATE AREA
         form = super(DocumentView, self).create_form(obj)
         form.category_id.choices = [(c.c_id, c.category) for c in Category.query.all()]
         return form
@@ -140,14 +156,6 @@ class DocumentView(ModelView):
 
 
 
-# ADMIN SECTION
-admin = Admin(app, name='microblog', template_mode='bootstrap3')
-# NOTE : add_view used to add admin pannel inside model based CRUD operations.
-admin.add_view(DocumentView(Document, db.session))
-admin.add_view(ModelView(Category, db.session))
-admin.add_view(ModelView(Contact, db.session))
-admin.add_view(ModelView(PageInformation, db.session))
-admin.add_view(ModelView(ContactInfo, db.session))
 
 
 
